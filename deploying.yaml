@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: testarii
+    component: web
+  name: testarii
+  namespace: testerific
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testarii
+  template:
+    metadata:
+      labels:
+        app: testarii
+    spec:
+      containers:
+      - image: testery
+        imagePullPolicy: IfNotPresent
+        name: test
+        ports:
+        - containerPort: 80
+---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: my-service
+    spec:
+      type: LoadBalancer
+      selector:
+        app: testarii
+      ports:
+        - port: 80
+          targetPort: 80
