@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: testarii
+    app: webserver
     component: web
-  name: testarii
-  namespace: testerific
+  name: web-server
+  namespace: web-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: testarii
+      app: webserver
   template:
     metadata:
       labels:
-        app: testarii
+        app: webserver
     spec:
       containers:
-      - image: testery
+      - image: kube_nginx
         imagePullPolicy: IfNotPresent
         name: test
         ports:
@@ -26,11 +26,11 @@ spec:
     apiVersion: v1
     kind: Service
     metadata:
-      name: my-service
+      name: nginx-service
     spec:
       type: LoadBalancer
       selector:
-        app: testarii
+        app: webserver
       ports:
         - port: 80
           targetPort: 80
